@@ -27,7 +27,20 @@ contactBtn.addEventListener('click', () => {
   scrollIntoView('#contact');
 });
 
+// scrollIntoView function
 function scrollIntoView(selector) {
   const scrollTo = document.querySelector(selector);
   scrollTo.scrollIntoView({ behavior: 'smooth' });
 }
+
+// Make home slowly fade to transparent as the window scrolls down
+const homeContainer = document.querySelector('.home__container');
+const home = document.querySelector('#home');
+const homeHeight = home.getBoundingClientRect().height;
+document.addEventListener('scroll', () => {
+  if (window.scrollY > homeHeight) {
+    return;
+  }
+  homeContainer.style.opacity = 1 - window.scrollY / homeHeight;
+  console.log(1 - window.scrollY / homeHeight);
+});
