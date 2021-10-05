@@ -27,12 +27,6 @@ contactBtn.addEventListener('click', () => {
   scrollIntoView('#contact');
 });
 
-// scrollIntoView function
-function scrollIntoView(selector) {
-  const scrollTo = document.querySelector(selector);
-  scrollTo.scrollIntoView({ behavior: 'smooth' });
-}
-
 // Make home slowly fade to transparent as the window scrolls down
 const homeContainer = document.querySelector('.home__container');
 const home = document.querySelector('#home');
@@ -58,3 +52,26 @@ document.addEventListener('scroll', () => {
     ArrowUp.classList.remove('visible');
   }
 });
+
+// Projects
+const workBtnContainer = document.querySelector('.work__categories');
+const projects = document.querySelectorAll('.project');
+workBtnContainer.addEventListener('click', e => {
+  const filter = e.target.dataset.filter || e.target.parentNode.dataset.filter;
+  if (filter == null) {
+    return;
+  }
+  projects.forEach(project => {
+    if (filter === '*' || filter === project.dataset.type) {
+      project.classList.remove('invisible');
+    } else {
+      project.classList.add('invisible');
+    }
+  });
+});
+
+// scrollIntoView function
+function scrollIntoView(selector) {
+  const scrollTo = document.querySelector(selector);
+  scrollTo.scrollIntoView({ behavior: 'smooth' });
+}
