@@ -96,10 +96,19 @@ p {
 
 /* Navbar */
 #navbar {
+  position: fixed;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 16px;
+  transition: all var(--animation-duration) ease-in-out;
+  background-color: transparent;
+}
+
+#navbar.navbar--dark {
+  padding: 8px;
+  height: 50px;
   background-color: var(--color-pink);
 }
 
@@ -144,6 +153,7 @@ p {
 #home {
   background: url('./assets/imgs/home-background.png') center/cover no-repeat;
   padding: 40px;
+  padding-top: 120px;
   text-align: center;
 }
 
