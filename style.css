@@ -129,6 +129,7 @@ p {
   color: var(--color-white);
   border: 1px solid transparent;
   cursor: pointer;
+  transition: all var(--animation-duration) ease-in-out;
 }
 
 .navbar__menu__item:hover,
@@ -140,8 +141,7 @@ p {
 
 .navbar__toggle-btn {
   position: absolute;
-  top: 0;
-  line-height: 72px;
+  top: 13px;
   right: 32px;
   font-size: 24px;
   color: var(--color-white);
@@ -406,7 +406,7 @@ p {
 }
 
 .project__description h3 {
-  color: var(--color-white);
+  color: var(--color-orange);
 }
 
 .project__description h3:after {
@@ -517,11 +517,21 @@ p {
 @media screen and (max-width: 768px) {
   .navbar__toggle-btn {
     display: block;
+    z-index: 1;
+  }
+
+  .navbar__logo {
+    line-height: 0.6;
   }
 
   #navbar {
     flex-direction: column;
     align-items: flex-start;
+    background-color: var(--color-pink);
+  }
+
+  #navbar.navbar--dark {
+    padding: 16px;
   }
 
   .navbar__menu {
@@ -529,6 +539,11 @@ p {
     text-align: center;
     width: 100%;
     display: none;
+    background-color: var(--color-pink);
+  }
+
+  .navbar__menu.open {
+    display: block;
   }
 
   .about__majors {

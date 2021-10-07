@@ -18,17 +18,26 @@ navbarMenu.addEventListener('click', event => {
   if (link == null) {
     return;
   }
+  navbarMenu.classList.remove('open');
   scrollIntoView(link);
+});
+
+// Navbar toggle button for small screen
+const navbarToggleBtn = document.querySelector('.navbar__toggle-btn');
+navbarToggleBtn.addEventListener('click', () => {
+  navbarMenu.classList.toggle('open');
 });
 
 // navbar border
 const navbarMenuItems = document.querySelectorAll('.navbar__menu__item');
 navbarMenu.addEventListener('click', e => {
-  console.log('aaa');
   navbarMenuItems.forEach(navbarMenuItem => {
     navbarMenuItem.classList.remove('selected');
-    e.target.classList.add('selected');
   });
+  e.target.classList.add('selected');
+  setTimeout(() => {
+    e.target.classList.remove('selected');
+  }, 600);
 });
 
 // Handle scrolling when tapping on the "Contact me" button
