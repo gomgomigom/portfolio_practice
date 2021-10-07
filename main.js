@@ -21,6 +21,16 @@ navbarMenu.addEventListener('click', event => {
   scrollIntoView(link);
 });
 
+// navbar border
+const navbarMenuItems = document.querySelectorAll('.navbar__menu__item');
+navbarMenu.addEventListener('click', e => {
+  console.log('aaa');
+  navbarMenuItems.forEach(navbarMenuItem => {
+    navbarMenuItem.classList.remove('selected');
+    e.target.classList.add('selected');
+  });
+});
+
 // Handle scrolling when tapping on the "Contact me" button
 const contactBtn = document.querySelector('.home__contact');
 contactBtn.addEventListener('click', () => {
