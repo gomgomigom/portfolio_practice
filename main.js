@@ -28,18 +28,6 @@ navbarToggleBtn.addEventListener('click', () => {
   navbarMenu.classList.toggle('open');
 });
 
-// navbar border
-const navbarMenuItems = document.querySelectorAll('.navbar__menu__item');
-navbarMenu.addEventListener('click', e => {
-  navbarMenuItems.forEach(navbarMenuItem => {
-    navbarMenuItem.classList.remove('selected');
-  });
-  e.target.classList.add('selected');
-  setTimeout(() => {
-    e.target.classList.remove('selected');
-  }, 600);
-});
-
 // Handle scrolling when tapping on the "Contact me" button
 const contactBtn = document.querySelector('.home__contact');
 contactBtn.addEventListener('click', () => {
@@ -56,6 +44,30 @@ document.addEventListener('scroll', () => {
   }
   homeContainer.style.opacity = 1 - window.scrollY / homeHeight;
 });
+
+// navbar border
+
+const aboutHeight = about.getBoundingClientRect().height;
+const skillsHeight = skills.getBoundingClientRect().height;
+const workHeight = work.getBoundingClientRect().height;
+const testimonialsHeight = testimonials.getBoundingClientRect().height;
+const contactHeight = contact.getBoundingClientRect().height;
+
+const navbarMenuItems = document.querySelectorAll('.navbar__menu__item');
+navbarMenu.addEventListener('click', e => {
+  // navbarMenuItems.forEach(navbarMenuItem => {
+  //   navbarMenuItem.classList.remove('selected');
+  // });
+  // e.target.classList.add('selected');
+  makeBorder(navbarMenuItems, e);
+});
+
+function makeBorder(a, e) {
+  a.forEach(item => {
+    item.classList.remove('selected');
+  });
+  e.target.classList.add('selected');
+}
 
 // Handle click on the "arrow up" button
 const ArrowUp = document.querySelector('.arrow-up');
@@ -101,8 +113,52 @@ workBtnContainer.addEventListener('click', e => {
   }, 300);
 });
 
+const sectionIds = ['#home', '#about', '#skills', '#work', '#testimonials', '#contact'];
+
+const sections = sectionIds.map(id => document.querySelector(id));
+const navItems = sectionIds.map(id => document.querySelector(`[data-link="${id}"]`));
+
+let selectedNavIndex = 0;
+let selectedNavItem = navItems[0];
+function selectNavItem(selected) {
+  selectedNavItem.classList.remove('selected');
+  selectedNavItem = selected;
+  selectedNavItem.classList.add('selected');
+}
+
 // scrollIntoView function
 function scrollIntoView(selector) {
   const scrollTo = document.querySelector(selector);
   scrollTo.scrollIntoView({ behavior: 'smooth' });
+  selectNavItem(navItems[sectionIds.indexOf(selector)]);
 }
+
+const observerOptions = {
+  root: null,
+  rootMargin: '0px',
+  threshold: 0.3,
+};
+
+const observerCallback = (entries, observer) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting && entry.intersectionRatio > 0) {
+      const index = sectionIds.indexOf(`#${entry.target.id}`);
+      if (entry.boundingClientRect.y < 0) {
+        selectedNavIndex = index + 1;
+      } else {
+        selectedNavIndex = index - 1;
+      }
+    }
+  });
+};
+
+const observer = new IntersectionObserver(observerCallback, observerOptions);
+sections.forEach(section => observer.observe(section));
+window.addEventListener('wheel', () => {
+  if (window.scrollY === 0) {
+    selectedNavIndex = 0;
+  } else if (Math.ceil(window.scrollY + window.innerHeight) >= document.body.clientHeight) {
+    selectedNavIndex = navItems.length - 1;
+  }
+  selectNavItem(navItems[selectedNavIndex]);
+});
